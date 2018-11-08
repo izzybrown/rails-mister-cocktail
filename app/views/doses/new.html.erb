@@ -1,0 +1,7 @@
+<%= form_for @dose, html: { class:"form-inline" } do |d| %>
+<div class="form-group">
+    <%= d.label :description, 'description' %>
+    <%= d.text_field :description, class:"form-control input" %>
+    <%= f.submit class:"btn btn-info submit" %>
+</div>
+<% end %>

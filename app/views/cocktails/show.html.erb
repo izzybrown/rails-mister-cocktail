@@ -1,0 +1,28 @@
+
+<p>
+  <strong>Cocktail:</strong>
+  <%= @cocktail.name %>
+</p>
+
+<p>
+  <strong>Ingredients:</strong>
+  <% if @cocktail.ingredients.empty? %>
+    <p>No ingredients added</p>
+  <% else %>
+    <% @cocktail.ingredients.each do |ing| %>
+      <p><%= ing.name %></p>
+    <% end %>
+  <% end %>
+</p>
+
+<p>
+  <strong>Doses:</strong>
+  <% if @cocktail.ingredients.empty? %>
+    <p>No doses added</p>
+  <% else %>
+    <% @cocktail.doses.each do |dose| %>
+      <p><%= dose.id %></p>
+    <% end %>
+  <% end %>
+</p>
+
