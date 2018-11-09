@@ -1,22 +1,52 @@
-<div class="banner" style="background-image: linear-gradient(-225deg, rgba(0,101,168,0.6) 0%, rgba(0,36,61,0.6) 50%), url('https://images.unsplash.com/photo-1531387367216-681093c0279b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=73ca72de11ae9cd2fa7367dc1ee76705&auto=format&fit=crop&w=1016&q=80') ;">
+<div class="banner" style="background-image: linear-gradient(-225deg, rgba(0,101,168,0.6) 0%, rgba(0,36,61,0.6) 50%), url('https://images.unsplash.com/photo-1470337458703-46ad1756a187?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=1998822d443cf97d75258149476c5aa5&auto=format&fit=crop&w=1349&q=80') ;">
   <div class="banner-content">
     <h1>Mr. Cocktail</h1>
     <h2>Your list of fantastic cocktails</h2>
+    <button type="button" class="btn btn-primary" id="modal-button" data-toggle="modal" data-target="#exampleModalCenter">
+      Create your own Cocktail
+    </button>
+    <p><span id="banner-content-new"></span></p>
   </div>
 </div>
-<div class="wrapper">
-  <div class="container">
-    <h1 class="text-center">Cocktail Cards</h1>
-    <ul class="list-group">
-      <% @cocktails.each do |cocktail| %>
-        <li class="list-group-item"><%= link_to cocktail.name, cocktail_path(cocktail) %></li>
-        <ul>
-          <% cocktail.ingredients.each do |ingredient| %>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Add your favourite cocktail</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for @cocktail do |f| %>
+        <%= f.input :name, :label => 'Cocktail' %>
+          <%= f.fields_for :dose,  @dose do |g|%>
+            <%= g.input :description, :label => 'Description?' %>
+            <%= g.association :ingredient, :label => 'Ingredients' %>
           <% end %>
-        </ul>
-      <% end %>
-    </ul>
+      </div>
+      <div class="modal-footer">
+        <%= f.submit "SAVE", class: "btn btn-primary btn-lg" %>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
-
-
+<div class="container">
+  <div class="row">
+    <% @cocktails.each do |cocktail| %>
+      <div class="col-xs-12 col-sm-4">
+        <div class="card" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= "https://source.unsplash.com/400x400/?cocktail&sig=#{(1..1000).to_a.sample}" %>);">
+          <div class="card-category">Cocktail</div>
+          <div class="card-description">
+            <h2><%= link_to cocktail.name, cocktail_path(cocktail) %></h2>
+            <%= link_to cocktail_path(cocktail), method: :delete do %>
+              <i class="fas fa-trash-alt"></i>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
